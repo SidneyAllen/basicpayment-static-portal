@@ -19,7 +19,7 @@
         "tags": [
           "Simple Calculator"
         ],
-        "summary": "Calculate#/?",
+        "summary": "Calculate",
         "description": "Calculates the expression using the specified operation.",
         "operationId": "Calculate",
         "parameters": [
@@ -28,7 +28,6 @@
             "in": "path",
             "description": "The operator to apply on the variables",
             "required": true,
-            "style": "simple",
             "schema": {
               "$ref": "#/components/schemas/OperationType"
             }
