@@ -21,7 +21,7 @@
         ],
         "summary": "Calculate",
         "description": "Calculates the expression using the specified operation.",
-        "operationId": "Calculate",
+        "operationId": "CalculateThis#?/",
         "parameters": [
           {
             "name": "operation",
