@@ -1,0 +1,5 @@
+{
+    "OpenAPIDefinitionPaths": [
+      "spec/Apimatic-Calculator.json"
+    ]
+}
