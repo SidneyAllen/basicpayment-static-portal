@@ -2,5 +2,5 @@
     "OpenAPIDefinitionPaths": [
       "spec/Apimatic-Calculator.json"
     ],
-    "IgnoreValidationErrors": false
+    "IgnoreValidationErrors": true
 }
