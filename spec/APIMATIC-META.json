@@ -1,0 +1,14 @@
+{
+    "ValidationConfiguration": {
+        "Rulesets": {
+            "newstore-ruleset": {
+                "FilePath": "new-ruleset.json"
+            },
+            "openapi-v3-apimatic-linting":{
+                "Rules":{
+                    "Skip": ["supported-vendor-extension"]
+                }
+            }
+        }
+    }
+}
