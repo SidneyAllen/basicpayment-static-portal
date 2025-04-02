@@ -1,0 +1,348 @@
+openapi: 3.0.3
+info:
+  title: Basic Payment API
+  version: 1.0.0
+  description: A demonstration API for payment processing with advanced features.
+  contact:
+    name: API Team
+    email: support@apimatic.com
+servers:
+  - url: https://basicpayment.wiremockapi.cloud/v1
+    description: Production server
+tags:
+  - name: payments
+    description: Payment-related operations
+security:
+  - basicAuth: []
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication for API access.
+  schemas:
+    PaymentRequest:
+      type: object
+      description: Payment request body for processing a payment.
+      required:
+        - amount
+        - currency
+        - customerId
+      properties:
+        amount:
+          type: number
+          format: double
+          description: The amount of the payment.
+          example: 100.00
+        currency:
+          type: string
+          description: The currency code (e.g., USD, EUR).
+          example: USD
+        customerId:
+          type: string
+          description: The ID of the customer.
+          example: 12345abc
+        description:
+          type: string
+          description: A description of the payment.
+          example: Payment for goods
+        paymentMethod:
+          $ref: "#/components/schemas/PaymentRequestPaymentMethod"
+      example: 
+        amount: 10.00
+        currency: "USD"
+        customerId: "1234"
+        description: "Shopping"
+        paymentMethod: 
+          cardNumber: "4242424242424242"
+          expiryDate: "01/2030"
+          cvv: "222"
+    CreditCardPayment:
+      type: object
+      description: Credit card payment details.
+      required:
+        - cardNumber
+        - expiryDate
+        - cvv
+      properties:
+        cardNumber:
+          type: string
+          description: Credit card number.
+          example: "4242424242424242"
+        expiryDate:
+          type: string
+          description: Expiry date (MM/YY).
+          example: "01/2030"
+        cvv:
+          type: string
+          description: CVV.
+          example: "123"
+      example:
+        cardNumber: "4242424242424242"
+        expiryDate: "01/2030"
+        cvv: "222"
+    BankTransferPayment:
+      type: object
+      description: Bank transfer payment details.
+      required:
+        - accountNumber
+        - routingNumber
+      properties:
+        accountNumber:
+          type: string
+          description: Bank account number.
+          example: "1234567890"
+        routingNumber:
+          type: string
+          description: Routing number.
+          example: "444444444"
+      example:
+        accountNumber: "1234567890"
+        routingNumber: "444444444"
+    PaymentResponse:
+      type: object
+      description: Payment response after processing a payment.
+      required:
+        - paymentId
+        - status
+      properties:
+        paymentId:
+          type: string
+          description: The unique ID of the payment.
+          example: "1234567890"
+        status:
+          $ref: "#/components/schemas/PaymentResponseStatus"
+        message:
+          type: string
+          description: A message related to the payment.
+          example: "Payment successful"
+        paymentDetails:
+          $ref: "#/components/schemas/PaymentResponsePaymentDetails"
+      example:
+        paymentId: "1234567890"
+        status: "successful"
+        message: "Payment successful"
+    CreditCardDetails:
+      type: object
+      description: Credit card payment details for the response.
+      properties:
+        last4:
+          type: string
+          description: Last 4 digits of the card.
+          example: "4242"
+        brand:
+          type: string
+          description: Credit card brand.
+          example: Visa
+      example:
+        last4: "4242"
+        brand: "Visa"
+    BankTransferDetails:
+      type: object
+      description: Bank transfer payment details for the response.
+      properties:
+        bankName:
+          type: string
+          description: Name of the bank.
+          example: Bank of America
+        accountHolder:
+          type: string
+          description: Account holder name.
+          example: John Doe
+      example:
+        bankName: "Bank of America"
+        accountHolder: "John Doe"
+    ErrorResponse:
+      type: object
+      description: Error response for API requests.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: The error code.
+          example: 400
+        message:
+          type: string
+          description: The error message.
+          example: "Invalid request"
+      example:
+        code: 400
+        message: "Invalid request"
+    PaymentResponseStatus:
+      type: string
+      enum:
+        - pending
+        - successful
+        - failed
+      description: The status of the payment.
+      example: successful
+    PaymentRequestPaymentMethod:
+      description: Payment method for the payment request.
+      example:
+        cardNumber: "4242424242424242"
+        expiryDate: "01/2030"
+        cvv: "222"
+      oneOf:
+        - $ref: "#/components/schemas/CreditCardPayment"
+        - $ref: "#/components/schemas/BankTransferPayment" 
+    PaymentResponsePaymentDetails:
+      description: Payment details for the payment response.
+      example:
+        last4: "4242"
+        brand: "Visa"
+        bankName: "Bank of America"
+      anyOf:
+        - $ref: "#/components/schemas/CreditCardDetails"
+        - $ref: "#/components/schemas/BankTransferDetails"
+    ProcessARefundForAPaymentRequestBodyJson:
+      type: object
+      description: Request body for processing a refund for a payment.
+      properties:
+        refundAmount:
+          type: number
+          format: double
+          description: The amount to refund.
+          example: 10.00
+      example:
+        refundAmount: 10.00
+paths:
+  /payments:
+    post:
+      summary: Process a payment.
+      description: Process a payment using various payment methods.
+      operationId: ProcessPayment
+      tags: 
+        - payments
+      requestBody:
+        required: true
+        description: Payment request details.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentRequest"
+      responses:
+        "201":
+          description: Payment created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentResponse"
+              example: 
+                {
+                  "paymentId": "1234567890",
+                  "status": "successful",
+                  "message": "Payment successful"
+                }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /payments/{paymentId}:
+    get:
+      summary: Get payment details.
+      description: Get a payment using unique payment ID.
+      operationId: GetPayment
+      tags: 
+      - payments
+      parameters:
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the payment to retrieve.
+          example: "1234567890"
+      responses:
+        "200":
+          description: Payment details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentResponse"
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Payment not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /payments/{paymentId}/refund:
+    post:
+      summary: Process a refund for a payment.
+      description: Refund a payment using unique payment Id.
+      operationId: RefundPayment
+      tags: 
+      - payments
+      parameters:
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "1234567890"
+          description: The ID of the payment to refund.
+      requestBody:
+        required: true
+        description: Refund request details.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProcessARefundForAPaymentRequestBodyJson"
+      responses:
+        "200":
+          description: Refund processed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentResponse"
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Payment not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
