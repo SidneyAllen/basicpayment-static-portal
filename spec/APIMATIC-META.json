@@ -13,6 +13,7 @@
     },
     "CodeGenSettings": {
         "JavaPackageName": "com.apimatic.payments", 
-        "UseControllerPrefix": false
+        "UseControllerPrefix": false,
+         "ControllerPostfix": ""
     }
 }
