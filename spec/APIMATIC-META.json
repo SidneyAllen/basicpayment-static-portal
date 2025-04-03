@@ -13,8 +13,7 @@
     },
     "CodeGenSettings": {
         "JavaPackageName": "com.apimatic.payments", 
-        "UseControllerPrefix": true,
-        "ControllerPostfix": "",
+        "UseControllerPrefix": false,
         "ProjectName": "BasicAPI"
     }
 }
