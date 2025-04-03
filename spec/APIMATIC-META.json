@@ -14,7 +14,7 @@
     "CodeGenSettings": {
         "JavaPackageName": "com.apimatic.payments", 
         "UseControllerPrefix": true,
-        "ControllerPostfix": "Action",
+        "ControllerPostfix": "",
         "ProjectName": "BasicAPI"
     }
 }
