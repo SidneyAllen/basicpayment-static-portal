@@ -12,6 +12,7 @@
         }
     },
     "CodeGenSettings": {
-        "JavaPackageName": "com.apimatic.payments",
+        "JavaPackageName": "com.apimatic.payments", 
+        "ClientInterfaceName": "apiclient"
     }
 }
