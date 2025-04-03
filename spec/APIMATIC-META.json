@@ -10,5 +10,8 @@
                 }
             }
         }
+    },
+    "CodeGenSettings": {
+        "JavaPackageName": "com.apimatic.payments",
     }
 }
