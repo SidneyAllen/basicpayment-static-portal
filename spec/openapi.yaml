@@ -7,8 +7,7 @@ info:
     name: API Team
     email: support@apimatic.com
   x-codegen-settings:
-    "javaPackageName": "com.apimatic"
-    "UseControllerPrefix": false
+    "ProjectName": "SidTest"
   x-extension-1: "hello"
 servers:
   - url: https://basicpayment.wiremockapi.cloud/v1
