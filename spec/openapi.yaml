@@ -8,7 +8,6 @@ info:
     email: support@apimatic.com
   x-codegen-settings:
     "ProjectName": "SidTest"
-  x-extension-1: "hello"
 servers:
   - url: https://basicpayment.wiremockapi.cloud/v1
     description: Production server
