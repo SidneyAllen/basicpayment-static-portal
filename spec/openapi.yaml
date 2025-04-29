@@ -213,7 +213,7 @@ paths:
   /payments:
     post:
       summary: Process a payment.
-      description: ""
+      description: 
       operationId: Process/Payment
       tags: 
         - payments
