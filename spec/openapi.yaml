@@ -213,8 +213,8 @@ paths:
   /payments:
     post:
       summary: Process a payment.
-      description: 
-      operationId: Process/Payment
+      description: Process a payment using various payment methods.
+      operationId: ProcessPayment123
       tags: 
         - payments
       requestBody:
