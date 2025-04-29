@@ -205,7 +205,6 @@ components:
         refundAmount:
           type: number
           format: double
-         
 paths:
   /payments:
     post:
