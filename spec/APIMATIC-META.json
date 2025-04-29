@@ -1,3 +1,16 @@
 {
-    "ValidationConfiguration": { }
+    "ValidationConfiguration": {
+        "Rulesets": {
+            "openapi-v3-apimatic-linting":{
+                "Rules":{
+                    "Skip": ["supported-vendor-extension"]
+                }
+            }
+        }
+    },
+    "CodeGenSettings": {
+        "JavaPackageName": "com.apimatic.payments", 
+        "UseControllerPrefix": false,
+        "ProjectName": "BasicAPI"
+    }
 }
