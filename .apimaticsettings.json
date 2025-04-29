@@ -1,6 +1,6 @@
 {
     "OpenAPIDefinitionPaths": [
-      "spec/Apimatic-Calculator.json"
+      "spec/openapi.yaml"
     ],
     "IgnoreValidationErrors": false
 }
