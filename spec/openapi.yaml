@@ -7,7 +7,7 @@ info:
     name: API Team
     email: support@apimatic.com
   x-codegen-settings:
-    "ProjectName": "SidTest"
+    ProjectName: SidTest
 servers:
   - url: https://basicpayment.wiremockapi.cloud/v1
     description: Production server
@@ -35,7 +35,7 @@ components:
           type: number
           format: double
           description: The amount of the payment.
-          example: 100.00
+          example: 100
         currency:
           type: string
           description: The currency code (e.g., USD, EUR).
@@ -50,14 +50,14 @@ components:
           example: Payment for goods
         paymentMethod:
           $ref: "#/components/schemas/PaymentRequestPaymentMethod"
-      example: 
-        amount: 10.00
-        currency: "USD"
+      example:
+        amount: 10
+        currency: USD
         customerId: "1234"
-        description: "Shopping"
-        paymentMethod: 
+        description: Shopping
+        paymentMethod:
           cardNumber: "4242424242424242"
-          expiryDate: "01/2030"
+          expiryDate: 01/2030
           cvv: "222"
     CreditCardPayment:
       type: object
@@ -74,14 +74,14 @@ components:
         expiryDate:
           type: string
           description: Expiry date (MM/YY).
-          example: "01/2030"
+          example: 01/2030
         cvv:
           type: string
           description: CVV.
           example: "123"
       example:
         cardNumber: "4242424242424242"
-        expiryDate: "01/2030"
+        expiryDate: 01/2030
         cvv: "222"
     BankTransferPayment:
       type: object
@@ -117,13 +117,13 @@ components:
         message:
           type: string
           description: A message related to the payment.
-          example: "Payment successful"
+          example: Payment successful
         paymentDetails:
           $ref: "#/components/schemas/PaymentResponsePaymentDetails"
       example:
         paymentId: "1234567890"
-        status: "successful"
-        message: "Payment successful"
+        status: successful
+        message: Payment successful
     CreditCardDetails:
       type: object
       description: Credit card payment details for the response.
@@ -138,7 +138,7 @@ components:
           example: Visa
       example:
         last4: "4242"
-        brand: "Visa"
+        brand: Visa
     BankTransferDetails:
       type: object
       description: Bank transfer payment details for the response.
@@ -152,8 +152,8 @@ components:
           description: Account holder name.
           example: John Doe
       example:
-        bankName: "Bank of America"
-        accountHolder: "John Doe"
+        bankName: Bank of America
+        accountHolder: John Doe
     ErrorResponse:
       type: object
       description: Error response for API requests.
@@ -168,10 +168,10 @@ components:
         message:
           type: string
           description: The error message.
-          example: "Invalid request"
+          example: Invalid request
       example:
         code: 400
-        message: "Invalid request"
+        message: Invalid request
     PaymentResponseStatus:
       type: string
       enum:
@@ -184,17 +184,17 @@ components:
       description: Payment method for the payment request.
       example:
         cardNumber: "4242424242424242"
-        expiryDate: "01/2030"
+        expiryDate: 01/2030
         cvv: "222"
       oneOf:
         - $ref: "#/components/schemas/CreditCardPayment"
-        - $ref: "#/components/schemas/BankTransferPayment" 
+        - $ref: "#/components/schemas/BankTransferPayment"
     PaymentResponsePaymentDetails:
       description: Payment details for the payment response.
       example:
         last4: "4242"
-        brand: "Visa"
-        bankName: "Bank of America"
+        brand: Visa
+        bankName: Bank of America
       anyOf:
         - $ref: "#/components/schemas/CreditCardDetails"
         - $ref: "#/components/schemas/BankTransferDetails"
@@ -205,17 +205,13 @@ components:
         refundAmount:
           type: number
           format: double
-          description: The amount to refund.
-          example: 10.00
-      example:
-        refundAmount: 10.00
 paths:
   /payments:
     post:
       summary: Process a payment.
       description: Process a payment using various payment methods.
-      operationId: ProcessPayment
-      tags: 
+      operationId: Process/Payment
+      tags:
         - payments
       requestBody:
         required: true
@@ -231,12 +227,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PaymentResponse"
-              example: 
-                {
-                  "paymentId": "1234567890",
-                  "status": "successful",
-                  "message": "Payment successful"
-                }
+              example:
+                paymentId: "1234567890"
+                status: successful
+                message: Payment successful
         "400":
           description: Bad request.
           content:
@@ -260,8 +254,8 @@ paths:
       summary: Get payment details.
       description: Get a payment using unique payment ID.
       operationId: GetPayment
-      tags: 
-      - payments
+      tags:
+        - payments
       parameters:
         - name: paymentId
           in: path
@@ -300,8 +294,8 @@ paths:
       summary: Process a refund for a payment.
       description: Refund a payment using unique payment Id.
       operationId: RefundPayment
-      tags: 
-      - payments
+      tags:
+        - payments
       parameters:
         - name: paymentId
           in: path
