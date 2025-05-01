@@ -205,12 +205,16 @@ components:
         refundAmount:
           type: number
           format: double
+          description: The amount to refund.
+          example: 10
+      example:
+        refundAmount: 10
 paths:
   /payments:
     post:
       summary: Process a payment.
       description: Process a payment using various payment methods.
-      operationId: Process/Payment
+      operationId: ProcessPayment
       tags:
         - payments
       requestBody:
